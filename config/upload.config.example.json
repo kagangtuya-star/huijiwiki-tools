@@ -1,0 +1,43 @@
+{
+  "wiki": {
+    "prefix": "dnd5e",
+    "authKey": "your-auth-key-here"
+  },
+  "auth": {
+    "username": "YourUsername@BotName",
+    "password": "your-bot-password"
+  },
+  "upload": {
+    "comment": "Batch image upload"
+  },
+  "categoryMapping": {
+    "adventure": "模组",
+    "backgrounds": "背景",
+    "bastions": "据点",
+    "bestiary": "怪物",
+    "book": "扩展",
+    "characters": "人物",
+    "charcreationoptions": "职业选项",
+    "classes": "职业",
+    "conditions": "状态",
+    "diseases": "疾病",
+    "covers": "封面",
+    "decks": "卡牌",
+    "deities": "神祇",
+    "dmscreen": "帷幕",
+    "feats": "专长",
+    "hazards": "危害",
+    "items": "道具",
+    "languages": "语言",
+    "object": "物件",
+    "optionalfeatures": "职业能力选项",
+    "pdf": "PDF",
+    "races": "种族",
+    "recipes": "食谱",
+    "spells": "法术",
+    "traps": "陷阱",
+    "variantrules": "术语",
+    "vehicles": "载具"
+  },
+  "skipFolders": ["docker"]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "huijiwiki-tools",
+  "version": "1.0.0",
+  "description": "HuijiWiki batch operation tools",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "upload": "node tools/batch-upload-images.js",
+    "upload:dry-run": "node tools/batch-upload-images.js --dry-run",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "huijiwiki-api": "^0.8.4"
+  }
+}
