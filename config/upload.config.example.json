@@ -8,7 +8,8 @@
     "password": "your-bot-password"
   },
   "upload": {
-    "comment": "Batch image upload"
+    "comment": "Batch image upload",
+    "maxConcurrency": 10
   },
   "categoryMapping": {
     "adventure": "模组",

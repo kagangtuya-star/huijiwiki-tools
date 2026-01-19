@@ -19,7 +19,7 @@ function parseArgs(args) {
     resume: null,
     retryFailed: null,
     dryRun: false,
-    concurrency: 1,
+    concurrency: null,
     help: false
   };
 
@@ -58,7 +58,10 @@ function parseArgs(args) {
         options.dryRun = true;
         break;
       case '--concurrency':
-        options.concurrency = parseInt(next, 10) || 1;
+        {
+          const parsed = Number.parseInt(next, 10);
+          options.concurrency = Number.isFinite(parsed) ? parsed : null;
+        }
         i++;
         break;
       case '-h':
@@ -69,6 +72,23 @@ function parseArgs(args) {
   }
 
   return options;
+}
+
+function normalizeConcurrency(value) {
+  return Number.isFinite(value) ? Math.max(1, Math.floor(value)) : null;
+}
+
+function resolveConcurrency(requestedConcurrency, config) {
+  const normalizedRequested = normalizeConcurrency(requestedConcurrency);
+  const configMax = normalizeConcurrency(
+    config?.upload?.maxConcurrency ?? config?.upload?.concurrency
+  );
+
+  if (normalizedRequested) {
+    return configMax ? Math.min(normalizedRequested, configMax) : normalizedRequested;
+  }
+
+  return configMax ?? 1;
 }
 
 function printHelp() {
@@ -86,7 +106,7 @@ Options:
   --resume <file>           Resume from a progress file
   --retry-failed <file>     Retry only failed files from a progress file
   --dry-run                 Preview without uploading
-  --concurrency <n>         Number of concurrent uploads (default: 1)
+  --concurrency <n>         Number of concurrent uploads (default: config upload.maxConcurrency or 1)
   -h, --help                Show this help message
 
 Examples:
@@ -156,6 +176,8 @@ async function main() {
     console.error(`Error loading config: ${err.message}`);
     process.exit(1);
   }
+
+  options.concurrency = resolveConcurrency(options.concurrency, config);
 
   const tracker = new ProgressTracker(options.progressFile);
   const uploadLog = new UploadLog(options.logFile);

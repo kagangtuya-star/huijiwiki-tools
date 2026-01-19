@@ -40,7 +40,8 @@ cp config/upload.config.example.json config/upload.config.json
     "password": "your-bot-password"
   },
   "upload": {
-    "comment": "Batch image upload"
+    "comment": "Batch image upload",
+    "maxConcurrency": 10
   },
   "categoryMapping": {
     "adventure": "模组",
@@ -61,6 +62,7 @@ cp config/upload.config.example.json config/upload.config.json
 | `auth.username` | 登录用户名，机器人账号格式为 `User@BotName` |
 | `auth.password` | 登录密码或机器人密码 |
 | `upload.comment` | 上传时的编辑摘要 |
+| `upload.maxConcurrency` | 最大并发上传数（默认 10） |
 | `categoryMapping` | 一级文件夹的中英文分类映射表 |
 | `skipFolders` | 需要跳过的文件夹列表（如 `docker`） |
 
@@ -139,7 +141,7 @@ node tools/batch-upload-images.js --retry-failed ./upload-progress.json
 
 ### 并发上传
 
-设置并发数提高上传速度：
+设置并发数提高上传速度，且不会超过配置中的 `upload.maxConcurrency`：
 
 ```bash
 node tools/batch-upload-images.js -s ./images --concurrency 3
@@ -156,7 +158,7 @@ node tools/batch-upload-images.js -s ./images --concurrency 3
 | `--resume <file>` | 从进度文件恢复 | - |
 | `--retry-failed <file>` | 重试失败的文件 | - |
 | `--dry-run` | 预览模式，不实际上传 | `false` |
-| `--concurrency <n>` | 并发上传数 | `1` |
+| `--concurrency <n>` | 并发上传数（不超过 `upload.maxConcurrency`） | `upload.maxConcurrency` 或 `1` |
 | `-h, --help` | 显示帮助信息 | - |
 
 ## 分类标签规则
